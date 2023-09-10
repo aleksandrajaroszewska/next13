@@ -16,9 +16,9 @@ export const ProductListItemDescription = ({
 	return (
 		<div className="bg-white px-4 py-3">
 			<a href="#">
-				<h1 className="text-lg font-semibold text-gray-800 transition duration-300 ease-in-out hover:text-red-500">
+				<h3 className="text-lg font-semibold text-gray-800 transition duration-300 ease-in-out hover:text-red-500">
 					{title}
-				</h1>
+				</h3>
 			</a>
 			<p className="mr-2 text-xs text-gray-800">{category}</p>
 			<div className="flex py-2">
