@@ -40,7 +40,10 @@ export const ProductList = () => {
 		},
 	];
 	return (
-		<ul className="flex h-screen w-full items-center justify-center">
+		<ul
+			data-testid="products-list"
+			className="flex h-screen w-full items-center justify-center"
+		>
 			{products.map((product) => (
 				<ProductListItem key={product.id} product={product.data} />
 			))}
