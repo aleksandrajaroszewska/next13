@@ -1,52 +1,41 @@
-import { ProductListItem } from "../molecules/ProductListItem";
+import { ProductListItem } from "@/components/molecules/ProductListItem";
 
-export const ProductList = () => {
-	const products = [
-		{
-			id: 1,
-			data: {
-				category: "clothes",
-				title: "skirt",
-				price: 45,
-				salePrice: 30,
-			},
-		},
-		{
-			id: 2,
-			data: {
-				category: "clothes",
-				title: "jeans",
-				price: 100,
-				salePrice: 80,
-			},
-		},
-		{
-			id: 3,
-			data: {
-				category: "cloths",
-				title: "dress",
-				price: 50,
-				salePrice: 40,
-			},
-		},
-		{
-			id: 4,
-			data: {
-				category: "category",
-				title: "name",
-				price: 45,
-				salePrice: 30,
-			},
-		},
-	];
+export type Product = {
+	id: string;
+	title: string;
+	price: number;
+	category: string;
+	rating: {
+		rate: number;
+		count: number;
+	};
+	image: string;
+	description: string;
+};
+
+export default async function ProductsList({
+	page,
+	limit,
+}: {
+	page: number;
+	limit: number;
+}) {
+	const take = limit;
+	const offset = 10 * (page - 1);
+	const res = await fetch(
+		`https://naszsklep-api.vercel.app/api/products?offset=${offset}&take=${take}`,
+	);
+
+	const products = (await res.json()) as any[];
+
 	return (
 		<ul
 			data-testid="products-list"
-			className="flex h-screen w-full items-center justify-center"
+			className={"flex flex-wrap justify-center"}
 		>
-			{products.map((product) => (
-				<ProductListItem key={product.id} product={product.data} />
+			{products.map((product: Product) => (
+				<ProductListItem data-testid="products-list" key={product.id} product={product} />
 			))}
 		</ul>
 	);
-};
+}
