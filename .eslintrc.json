@@ -79,5 +79,6 @@
 			}
 		}
 	],
-	"ignorePatterns": ["*.js", "*.jsx"]
+	"ignorePatterns": ["*.js", "*.jsx"],
+	// "workingDirectories": ["<rootDir>/src"]
 }
