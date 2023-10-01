@@ -1,9 +1,9 @@
-import { Product } from "@/api/types";
-import { ProductListItem } from "@/components/molecules/ProductListItem";
+import { ProductListItem } from "@/ui/molecules/ProductListItem";
 import { executeGraphql } from "@/api/graphQlApi";
 
 import { type Metadata } from "next";
-import { ProductsGetByCategorySlugDocument } from "@/gql/graphql";
+
+import { getProductsById } from "@/api/products";
 
 // export const generateMetadata = async ({
 // 	params,
@@ -53,25 +53,11 @@ export default async function SingleProductPage({
 }: {
 	params: { productId: string };
 }) {
-	// const product = await executeGraphql(
-	// 	ProductsGetByCategorySlugDocument,
-	// 	{ slug: params.category },
-	// );
+	const product = await getProductsById(params.productId);
 
-	const product = {
-		id: "ckdu4bmyg0h1f0102jk0mwn2g",
-		name: "Tote Bag",
-		description:
-			"Carry your groceries in an eco-friendly way, repping your favorite Headless CMS",
-		categories: [{ id: "ckdu4bmyg0h1f0102jk0mwn2g", name: "Cups" }],
-		images: [
-			{
-				id: "ckdu4bmyg0h1f0102jk0mwn2g",
-				url: "https://media.graphassets.com/VppBzb2IQ0aQc5EHoSo0",
-			},
-		],
-		price: 1299,
-	};
+	if (!product) {
+		return <div>Product not found</div>;
+	}
 
 	return (
 		<main className="mx-auto max-w-xl">

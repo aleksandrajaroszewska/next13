@@ -7,12 +7,15 @@ const config: CodegenConfig = {
 	schema: process.env.GRAPHQL_URL,
 	overwrite: true,
 	ignoreNoDocuments: true,
-	documents: "src/graphql/*.graphql",
+	documents: [
+		"src/graphql/**/*.graphql",
+		"src/{app,ui,api}/**/*.{ts,tsx}",
+	],
 	generates: {
 		"src/gql/": {
 			preset: "client",
 			presetConfig: {
-				fragmentMasking: true,
+				fragmentMasking: false,
 			},
 			config: {
 				useTypeImports: true,

@@ -1,5 +1,5 @@
 import { getProductList } from "@/api/products";
-import ProductList from "@/components/organisms/ProductList";
+import ProductList from "@/ui/organisms/ProductList";
 
 import { ReactNode, Suspense } from "react";
 

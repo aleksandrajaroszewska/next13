@@ -1,6 +1,6 @@
 import { executeGraphql } from "@/api/graphQlApi";
 import { getProductsByCategorySlug } from "@/api/products";
-import ProductList from "@/components/organisms/ProductList";
+import ProductList from "@/ui/organisms/ProductList";
 import { ProductsGetByCategorySlugDocument } from "@/gql/graphql";
 import { notFound } from "next/navigation";
 

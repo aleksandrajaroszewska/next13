@@ -1,9 +1,9 @@
-import { ActiveLink } from "@/components/atoms/ActiveLink";
+import { ActiveLink } from "@/ui/atoms/ActiveLink";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ShoppingCart } from "lucide-react";
-import { Navigation } from "@/components/molecules/Navigation";
+import { Navigation } from "@/ui/molecules/Navigation";
 import clsx from "clsx";
 
 const inter = Inter({ subsets: ["latin"] });

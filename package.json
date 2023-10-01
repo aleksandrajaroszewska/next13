@@ -11,6 +11,7 @@
 		"codegen": "graphql-codegen --config .graphqlrc.ts"
 	},
 	"dependencies": {
+		"@apollo/client": "^3.8.4",
 		"@parcel/watcher": "^2.3.0",
 		"@types/node": "20.5.9",
 		"@types/react": "18.2.21",

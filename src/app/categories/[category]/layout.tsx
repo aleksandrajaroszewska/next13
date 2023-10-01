@@ -1,4 +1,4 @@
-import ProductList from "@/components/organisms/ProductList";
+import ProductList from "@/ui/organisms/ProductList";
 import { ReactNode, Suspense } from "react";
 
 export async function generateStaticParams() {
@@ -10,11 +10,10 @@ export async function generateStaticParams() {
 	];
 }
 
-export default  function CategoryPage({
+export default function CategoryPage({
 	children,
 }: {
 	children: ReactNode;
 }) {
-	return  children
-
+	return children;
 }
