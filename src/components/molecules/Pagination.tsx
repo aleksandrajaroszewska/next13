@@ -1,8 +1,4 @@
-"use client";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { ActiveLink } from "../atoms/ActiveLink";
-import { Route } from "next";
 import clsx from "clsx";
 
 export const Pagination = ({
@@ -12,8 +8,7 @@ export const Pagination = ({
 	currentPage: number;
 	totalPages: number;
 }) => {
-	const className =
-		"flex border-2  rounded-md p-2 hover:bg-white-500";
+	const className = "flex border-2 rounded-md p-2 hover:bg-white-500";
 	const activeClassName = "font-bold border-5 bg-white-500";
 
 	const pagesToMap = Array.from(
@@ -28,7 +23,7 @@ export const Pagination = ({
 				return (
 					<ActiveLink
 						key={page}
-						href={`/products/${page}`}
+						href={`/products`}
 						className={clsx(className, isActive && activeClassName)}
 					>
 						{page}

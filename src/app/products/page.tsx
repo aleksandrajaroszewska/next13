@@ -1,12 +1,11 @@
-
+import { getProductList } from "@/api/products";
 import ProductList from "@/components/organisms/ProductList";
 
-
-export default function Page() {
-
+export default async function ProductsPage() {
+	const products = await getProductList();
 	return (
-		<main className={"flex flex-col justify-around bg-fuchsia-800"}>
-            <ProductList  limit={20} page={1} />
+		<main className={"flex justify-around bg-fuchsia-800"}>
+			<ProductList products={products} />
 		</main>
 	);
 }
