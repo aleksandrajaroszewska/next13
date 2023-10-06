@@ -1,12 +1,14 @@
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { ShoppingCart } from "lucide-react";
 import { Navigation } from "@/ui/molecules/Navigation";
 import clsx from "clsx";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({
+	subsets: ["latin", "latin-ext"],
+});
 
 export const metadata: Metadata = {
 	title: "13next",
@@ -19,7 +21,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="pl">
-			<body className={clsx(inter.className, "bg-fuchsia-800")}>
+			<body className={clsx(montserrat.className, "bg-fuchsia-800")}>
 				<Navigation />
 
 				<main className="flex min-h-screen  bg-fuchsia-800 font-sans text-fuchsia-100">

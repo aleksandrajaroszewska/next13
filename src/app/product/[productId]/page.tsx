@@ -62,7 +62,7 @@ export default async function SingleProductPage({
 	return (
 		<main className="mx-auto max-w-xl">
 			<h1 className="mb-4 text-3xl font-bold">{product.name}</h1>
-			<ProductListItem key={product.id} product={product} />
+			<ProductListItem  product={product} />
 		</main>
 	);
 }

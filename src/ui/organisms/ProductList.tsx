@@ -10,7 +10,7 @@ export default async function ProductsList({
 	return (
 		<ul
 			data-testid="products-list"
-			className={"flex flex-wrap justify-center"}
+			className={"flex w-full flex-wrap  justify-center"}
 		>
 			{products.map((product: ProductListItemFragment) => (
 				<ProductListItem

@@ -1,7 +1,12 @@
 "use client";
 import Link from "next/link";
 import clsx from "clsx";
-import { notFound, usePathname, useRouter } from "next/navigation";
+import {
+	notFound,
+	usePathname,
+	useRouter,
+	useSelectedLayoutSegment,
+} from "next/navigation";
 import { NextRouter } from "next/router";
 import { Route } from "next";
 import { type ReactNode } from "react";
@@ -27,7 +32,11 @@ export const ActiveLink = <T extends string>({
 		return notFound();
 	}
 
-	const isActive = pathname === href;
+	const segment = useSelectedLayoutSegment();
+
+	const isActive = exact
+		? pathname === href
+		: pathname.startsWith(`${href}/`);
 
 	return (
 		<Link

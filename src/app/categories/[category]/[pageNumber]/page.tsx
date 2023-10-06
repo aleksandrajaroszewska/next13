@@ -3,6 +3,7 @@ import { getProductsByCategorySlug } from "@/api/products";
 import ProductList from "@/ui/organisms/ProductList";
 import { ProductsGetByCategorySlugDocument } from "@/gql/graphql";
 import { notFound } from "next/navigation";
+import { Pagination } from "@/ui/molecules/Pagination";
 
 export async function generateStaticParams({
 	params,
@@ -11,9 +12,9 @@ export async function generateStaticParams({
 }) {
 	if (params.category === "t-shirts") {
 		return [{ pageNumber: "1" }, { pageNumber: "2" }];
-	} else if (params.category === "skirts") {
-		return [{ pageNumber: "1" }];
-	} else if (params.category === "dresses") {
+	} else if (params.category === "hoodies") {
+		return [{ pageNumber: "1" }, { pageNumber: "2" }];
+	} else if (params.category === "accessories") {
 		return [{ pageNumber: "1" }, { pageNumber: "2" }];
 	}
 	return [];
@@ -24,7 +25,13 @@ export default async function CategoryProductsPage({
 }: {
 	params: { category: string; pageNumber: string };
 }) {
-	const products = await getProductsByCategorySlug(params.category);
+	const products = await getProductsByCategorySlug(
+		params.category,
+		Number(params.pageNumber),
+	);
+
+	const chosenCategory = params.category;
+
 	if (!products) {
 		notFound();
 	}
@@ -36,7 +43,14 @@ export default async function CategoryProductsPage({
 				{params.pageNumber}
 			</h1>
 			<ProductList products={products} />
-			{/* <pre>{JSON.stringify(category, null, 2)}</pre> */}
+
+			<Pagination
+				currentPage={
+					params.pageNumber ? Number(params.pageNumber) : 1
+				}
+				totalPages={2}
+				pageType={`categories/${chosenCategory}`}
+			/>
 		</div>
 	);
 }

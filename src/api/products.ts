@@ -3,6 +3,9 @@ import {
 	ProductListItemFragment,
 	ProductsGetByCategorySlugDocument,
 	ProductsGetListDocument,
+	ProductGetByPageDocument,
+	ProductsCountDocument,
+	CollectionsGetListDocument,
 } from "@/gql/graphql";
 import { executeGraphql } from "./graphQlApi";
 
@@ -15,16 +18,51 @@ export const getProductList = async () => {
 	return graphqlResponse.products;
 };
 
+export const getCollectionsList = async () => {
+	const graphqlResponse = await executeGraphql(
+		CollectionsGetListDocument,
+		{},
+	);
+
+	return graphqlResponse.collections;
+};
+
+export const getProductCount = async () => {
+	const graphqlResponse = await executeGraphql(
+		ProductsCountDocument,
+		{},
+	);
+
+	return graphqlResponse.productsConnection.aggregate.count;
+};
+
+export const getProductsByPage = async (page: number) => {
+	const productsPerPage = 4;
+	const offset = (page - 1) * productsPerPage;
+
+	const graphqlResponse = await executeGraphql(
+		ProductGetByPageDocument,
+		{
+			skip: offset,
+			first: productsPerPage,
+		},
+	);
+
+	return graphqlResponse.products;
+};
+
 export const getProductsByCategorySlug = async (
 	categorySlug: string,
+	page: number,
 ) => {
+	const productsPerPage = 2;
+	const offset = (page - 1) * productsPerPage;
 	const categories = await executeGraphql(
 		ProductsGetByCategorySlugDocument,
-		{ slug: categorySlug },
+		{ slug: categorySlug, skip: offset, first: productsPerPage },
 	);
-	const products = categories.categories[0]?.products;
 
-	return products;
+	return categories.categories[0]?.products;
 };
 
 export const getProductsById = async (
