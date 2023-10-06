@@ -80,5 +80,12 @@
 		}
 	],
 	"ignorePatterns": ["*.js", "*.jsx"],
+	"no-restricted-imports": [
+		"error",
+		{
+			"name": "next/router",
+			"message": "Please use next/navigation instead"
+		}
+	]
 	// "workingDirectories": ["<rootDir>/src"]
 }

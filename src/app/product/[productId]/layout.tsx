@@ -4,9 +4,6 @@ export default function Layout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className="m-8 w-10/12 h-100 bg-fuchsia-600">
-			<p>layout in layout</p>
-			{children}
-		</div>
+		<div className="h-150 m-8 w-10/12 bg-fuchsia-600">{children}</div>
 	);
 }

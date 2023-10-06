@@ -1,0 +1,7 @@
+query ProductsGetByRecommendedCategory($slug: String!) {
+	categories(where: { slug: $slug }) {
+		products(first: 5) {
+			...ProductListItem
+		}
+	}
+}
