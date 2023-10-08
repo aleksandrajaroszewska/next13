@@ -8,10 +8,7 @@ export default async function ProductsList({
 	products: ProductListItemFragment[];
 }) {
 	return (
-		<ul
-			data-testid="products-list"
-			className={"flex w-full flex-wrap  justify-center"}
-		>
+		<ul className={"flex w-full flex-wrap  justify-center"}>
 			{products.map((product: ProductListItemFragment) => (
 				<ProductListItem
 					data-testid="products-list"
