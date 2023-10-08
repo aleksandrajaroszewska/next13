@@ -1,4 +1,5 @@
 import { TypedDocumentString } from "@/gql/graphql";
+import { processEnv } from "@next/env";
 
 // export const executeGraphql = async <TQuery, TVariables>(
 // 	query: TypedDocumentString<TQuery, TVariables>,
@@ -53,10 +54,8 @@ export const executeGraphql = async <TResult, TVariables>({
 	if (!process.env.GRAPHQL_URL) {
 		throw TypeError("GRAPHQL_URL is not defined");
 	}
-	const url =
-		"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/clmxxs9m11rhl01t24zbmbuw9/master";
 
-	const res = await fetch(url, {
+	const res = await fetch(process.env.GRAPHQL_URL, {
 		method: "POST",
 		cache,
 		next,
