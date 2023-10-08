@@ -3,18 +3,19 @@ import { TypedDocumentString } from "@/gql/graphql";
 export const executeGraphql = async <TQuery, TVariables>(
 	query: TypedDocumentString<TQuery, TVariables>,
 	variables: TVariables,
-	next?: NextFetchRequestConfig,
+	options?: RequestInit,
 ): Promise<TQuery> => {
 	if (!process.env.GRAPHQL_URL) {
 		throw new Error("GRAPHQL_URL is not defined");
 	}
 	const res = await fetch(process.env.GRAPHQL_URL, {
 		method: "POST",
-		next,
 		headers: {
 			"Content-Type": "application/json",
+			// Authorization: `Bearer ${process.env.GRAPHQL_TOKEN}`,
 		},
 		body: JSON.stringify({ query, variables }),
+		...options,
 	});
 
 	type GraphqlResponse<T> =
@@ -25,10 +26,12 @@ export const executeGraphql = async <TQuery, TVariables>(
 		(await res.json()) as GraphqlResponse<TQuery>;
 
 	if (graphqlResponse.errors) {
+		console.log(graphqlResponse.errors);
 		throw new Error("GraphQL Error", {
 			cause: graphqlResponse.errors,
 		});
 	}
+
 	return graphqlResponse.data;
 };
 

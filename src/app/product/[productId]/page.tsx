@@ -1,40 +1,38 @@
-import { ProductListItem } from "@/ui/molecules/ProductListItem";
-import { executeGraphql } from "@/api/graphQlApi";
-
 import { type Metadata } from "next";
 
 import { getProductsById } from "@/api/products";
+import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
+import { cookies } from "next/headers";
 
-// export const generateMetadata = async ({
-// 	params,
-// }: {
-// 	params: { productId: string };
-// }): Promise<Metadata> => {
-// 	const product = await (
-// 		await fetch(
-// 			`https://naszsklep-api.vercel.app/api/products/${params.productId}`,
-// 		)
-// 	).json();
+import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
+import { addProductToCart, getOrCreateCart } from "@/api/cart";
 
-// 	return {
-// 		// title: `product ${product.title}`,
-// 		title: `product `,
-// 		description: product.description,
-// 		// openGraph: {
-// 		// 	title: product.title,
-// 		// 	description: product.description,
-// 		// 	images: [
-// 		// 		{
-// 		// 			url: product.image,
-// 		// 		},
-// 		// 	],
-// 		// },
-// 	};
-// };
+export const generateMetadata = async ({
+	params,
+}: {
+	params: { productId: string };
+}): Promise<Metadata> => {
+	const product = await getProductsById(params.productId);
+	if (!product) {
+		return {
+			title: "Product not found",
+		};
+	}
 
-// export const metadata: Metadata = {
-// 	title: "Product",
-// };
+	return {
+		title: `product ${product.name}`,
+		description: product.description,
+		openGraph: {
+			title: product.name,
+			description: product.description,
+			images: [
+				{
+					url: product.images[0]?.url || "/placeholder.png",
+				},
+			],
+		},
+	};
+};
 
 // export async function generateStaticParams() {
 // 	const res = await fetch(
@@ -59,10 +57,28 @@ export default async function SingleProductPage({
 		return <div>Product not found</div>;
 	}
 
+	async function addProductToCartAction(_formData: FormData) {
+		"use server";
+		const cart = await getOrCreateCart();
+		console.log(cart, "cart id");
+		console.log(params.productId, "product id");
+		// console.log(cart.id);
+		await addProductToCart(cart.id, params.productId);
+	}
+
 	return (
-		<main className="mx-auto max-w-xl">
-			<h1 className="mb-4 text-3xl font-bold">{product.name}</h1>
-			<ProductListItem  product={product} />
-		</main>
+		<article className="mx-auto max-w-xl">
+			<div className="flex flex-col justify-between">
+				<ProductCoverImage images={product.images} />
+				<h1 className="mb-2 text-3xl font-bold">{product.name}</h1>
+				<p className="my-2">price:{product.price}</p>
+				<p className="my-2">{product.categories[0]?.name}</p>
+				<p className="my-2">{product.description}</p>
+				<form action={addProductToCartAction}>
+					<input type="hidden" name="productId" value={product.id} />
+					<AddToCartButton />
+				</form>
+			</div>
+		</article>
 	);
 }

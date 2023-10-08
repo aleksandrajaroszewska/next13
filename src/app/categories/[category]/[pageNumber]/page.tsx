@@ -11,11 +11,11 @@ export async function generateStaticParams({
 	params: { category: string };
 }) {
 	if (params.category === "t-shirts") {
-		return [{ pageNumber: "1" }, { pageNumber: "2" }];
+		return [{ pageNumber: "1" }];
 	} else if (params.category === "hoodies") {
-		return [{ pageNumber: "1" }, { pageNumber: "2" }];
+		return [{ pageNumber: "1" }];
 	} else if (params.category === "accessories") {
-		return [{ pageNumber: "1" }, { pageNumber: "2" }];
+		return [{ pageNumber: "1" }];
 	}
 	return [];
 }
@@ -48,7 +48,7 @@ export default async function CategoryProductsPage({
 				currentPage={
 					params.pageNumber ? Number(params.pageNumber) : 1
 				}
-				totalPages={2}
+				totalPages={1}
 				pageType={`categories/${chosenCategory}`}
 			/>
 		</div>

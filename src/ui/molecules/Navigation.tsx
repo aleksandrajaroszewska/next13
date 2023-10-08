@@ -35,7 +35,9 @@ export const Navigation = () => {
 					</ActiveLink>
 				</li>
 				<li>
-					<ShoppingCart color="white" size={30} />
+					<ActiveLink href="/cart">
+						<ShoppingCart color="white" size={30} />
+					</ActiveLink>
 				</li>
 			</ul>
 		</nav>
