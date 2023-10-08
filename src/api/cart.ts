@@ -15,8 +15,12 @@ export async function getCartByIdFromCookies() {
 	console.log("cartId", cartId);
 
 	if (cartId) {
-		const cart = await executeGraphql(CartGetByIdDocument, {
-			id: cartId,
+		const cart = await executeGraphql({
+			query: CartGetByIdDocument,
+			variables: {
+				id: cartId,
+			},
+			next: { tags: ["cart"] },
 		});
 		if (cart.order) {
 			return cart.order;
@@ -50,34 +54,33 @@ export async function getOrCreateCart() {
 }
 
 export function createCart() {
-	return executeGraphql(CartCreateDocument, {});
+	return executeGraphql({ query: CartCreateDocument, variables: {} });
 }
 
 export async function addProductToCart(
 	orderId: string,
 	productId: string,
 ) {
-	const { product } = await executeGraphql(ProductsGetByIdDocument, {
-		id: productId,
+	const { product } = await executeGraphql({
+		query: ProductsGetByIdDocument,
+		variables: {
+			id: productId,
+		},
 	});
 	if (!product) {
 		throw new Error(`Product with id ${productId} not found`);
 	}
 
-	console.log("product", product);
+	// const cart = await executeGraphql(CartGetByIdDocument, {
+	// 	id: orderId,
+	// });
 
-	const cart = await executeGraphql(CartGetByIdDocument, {
-		id: orderId,
-	});
-
-	console.log("product.price", product.price);
-	console.log(orderId, "orderId");
-	console.log(productId, "productId");
-	console.log(cart, " cart order Id");
-
-	await executeGraphql(CartAddProductDocument, {
-		orderId,
-		total: product.price,
-		productId,
+	await executeGraphql({
+		query: CartAddProductDocument,
+		variables: {
+			orderId,
+			total: product.price,
+			productId,
+		},
 	});
 }

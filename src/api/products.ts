@@ -10,28 +10,28 @@ import {
 import { executeGraphql } from "./graphQlApi";
 
 export const getProductList = async () => {
-	const graphqlResponse = await executeGraphql(
-		ProductsGetListDocument,
-		{},
-	);
+	const graphqlResponse = await executeGraphql({
+		query: ProductsGetListDocument,
+		variables: {},
+	});
 
 	return graphqlResponse.products;
 };
 
 export const getCollectionsList = async () => {
-	const graphqlResponse = await executeGraphql(
-		CollectionsGetListDocument,
-		{},
-	);
+	const graphqlResponse = await executeGraphql({
+		query: CollectionsGetListDocument,
+		variables: {},
+	});
 
 	return graphqlResponse.collections;
 };
 
 export const getProductCount = async () => {
-	const graphqlResponse = await executeGraphql(
-		ProductsCountDocument,
-		{},
-	);
+	const graphqlResponse = await executeGraphql({
+		query: ProductsCountDocument,
+		variables: {},
+	});
 
 	return graphqlResponse.productsConnection.aggregate.count;
 };
@@ -40,13 +40,13 @@ export const getProductsByPage = async (page: number) => {
 	const productsPerPage = 4;
 	const offset = (page - 1) * productsPerPage;
 
-	const graphqlResponse = await executeGraphql(
-		ProductGetByPageDocument,
-		{
+	const graphqlResponse = await executeGraphql({
+		query: ProductGetByPageDocument,
+		variables: {
 			skip: offset,
 			first: productsPerPage,
 		},
-	);
+	});
 
 	return graphqlResponse.products;
 };
@@ -57,10 +57,14 @@ export const getProductsByCategorySlug = async (
 ) => {
 	const productsPerPage = 2;
 	const offset = (page - 1) * productsPerPage;
-	const categories = await executeGraphql(
-		ProductsGetByCategorySlugDocument,
-		{ slug: categorySlug, skip: offset, first: productsPerPage },
-	);
+	const categories = await executeGraphql({
+		query: ProductsGetByCategorySlugDocument,
+		variables: {
+			slug: categorySlug,
+			skip: offset,
+			first: productsPerPage,
+		},
+	});
 
 	return categories.categories[0]?.products;
 };
@@ -68,26 +72,15 @@ export const getProductsByCategorySlug = async (
 export const getProductsById = async (
 	productId: ProductListItemFragment["id"],
 ) => {
-	const product = await executeGraphql(ProductsGetByIdDocument, {
-		id: productId,
+	const product = await executeGraphql({
+		query: ProductsGetByIdDocument,
+		variables: {
+			id: productId,
+		},
 	});
 	return product.product;
 	throw new Error("Not implemented");
 };
-
-// export const getProductsByPage = async (page: number) => {
-// 	const offset = (page - 1) * productsPerPage;
-
-// 	const graphqlResponse = await executeGraphql({
-// 		query: ProductGetByPageDocument,
-// 		variables: {
-// 			skip: offset,
-// 			first: productsPerPage,
-// 		},
-// 	});
-
-// 	return graphqlResponse.products;
-// };
 
 // export const getProductsByCollectionSlug = async (collection: string, page: number) => {
 // 	const offset = (page - 1) * productsPerPage;

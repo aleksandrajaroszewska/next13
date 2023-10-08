@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/cart";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const generateMetadata = async ({
 	params,
@@ -60,10 +61,9 @@ export default async function SingleProductPage({
 	async function addProductToCartAction(_formData: FormData) {
 		"use server";
 		const cart = await getOrCreateCart();
-		console.log(cart, "cart id");
-		console.log(params.productId, "product id");
-		// console.log(cart.id);
+
 		await addProductToCart(cart.id, params.productId);
+		revalidateTag("cart");
 	}
 
 	return (

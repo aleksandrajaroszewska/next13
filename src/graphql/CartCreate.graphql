@@ -1,9 +1,3 @@
-# mutation CartCreate {
-# 	createOrder(data: { total: 0 }) {
-# 		...Cart
-# 	}
-# }
-
 mutation CartCreate {
 	createOrder(data: { total: 0 }) {
 		...Cart

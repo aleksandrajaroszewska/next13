@@ -1,7 +1,22 @@
 import { ShoppingCart } from "lucide-react";
 import { ActiveLink } from "../atoms/ActiveLink";
+import { cookies } from "next/headers";
+import { executeGraphql } from "@/api/graphQlApi";
+import { CartGetByIdDocument } from "@/gql/graphql";
 
-export const Navigation = () => {
+export async function Navigation() {
+	const cartId = cookies().get("cartId")?.value;
+	const cart = cartId
+		? await executeGraphql({
+				query: CartGetByIdDocument,
+				variables: {
+					id: cartId,
+				},
+		  })
+		: null;
+
+	const quantity = cart?.order?.orderItems.length ?? 0;
+
 	return (
 		<nav className=" sticky top-0 z-10 opacity-70" role="navigation">
 			<ul className=" flex items-center justify-between bg-fuchsia-900 px-24 py-4 text-fuchsia-100 ">
@@ -34,12 +49,13 @@ export const Navigation = () => {
 						accesories
 					</ActiveLink>
 				</li>
-				<li>
-					<ActiveLink href="/cart">
-						<ShoppingCart color="white" size={30} />
+				<li className="flex">
+					<ShoppingCart color="white" size={20} />
+					<ActiveLink className="ml-2" href="/cart">
+						Cart ({quantity})
 					</ActiveLink>
 				</li>
 			</ul>
 		</nav>
 	);
-};
+}

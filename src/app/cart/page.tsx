@@ -2,6 +2,8 @@ import { getCartByIdFromCookies } from "@/api/cart";
 import { formatMoney } from "@/utils";
 
 import { redirect } from "next/navigation";
+import { IncrementProductQuantity } from "./IncrementProductQuantity";
+import { RemoveButton } from "./RemoveButton";
 
 export default async function CartPage() {
 	const cart = await getCartByIdFromCookies();
@@ -9,17 +11,18 @@ export default async function CartPage() {
 		redirect("/");
 	}
 	return (
-		<div>
+		<section>
 			<h1>Order #{cart.id} summary</h1>
 			<table>
 				<thead>
 					<tr>
 						<th>Product</th>
-						<th>Quantity</th>
+						<th>Quan.</th>
+						<th>psc.</th>
 						<th>Price</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
-
 				<tbody>
 					{cart.orderItems.map((item) => {
 						if (!item.product) {
@@ -29,12 +32,21 @@ export default async function CartPage() {
 							<tr key={item.product.id}>
 								<td>{item.product.name}</td>
 								<td>{item.quantity}</td>
+								<td>
+									<IncrementProductQuantity
+										quantity={item.quantity}
+										itemId={item.id}
+									/>
+								</td>
 								<td>{formatMoney(item.product.price)}</td>
+								<td>
+									<RemoveButton productId={item.id} />
+								</td>
 							</tr>
 						);
 					})}
 				</tbody>
 			</table>
-		</div>
+		</section>
 	);
 }
