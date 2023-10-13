@@ -13,6 +13,9 @@ export const getProductList = async () => {
 	const graphqlResponse = await executeGraphql({
 		query: ProductsGetListDocument,
 		variables: {},
+		next: {
+			revalidate: 15,
+		},
 	});
 
 	return graphqlResponse.products;
@@ -76,6 +79,9 @@ export const getProductsById = async (
 		query: ProductsGetByIdDocument,
 		variables: {
 			id: productId,
+		},
+		next: {
+			revalidate: 1,
 		},
 	});
 	return product.product;

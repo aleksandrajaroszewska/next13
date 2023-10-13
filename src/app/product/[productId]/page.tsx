@@ -1,4 +1,4 @@
-import { type Metadata } from "next";
+import { Route, type Metadata } from "next";
 
 import { getProductsById } from "@/api/products";
 import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
@@ -66,10 +66,15 @@ export default async function SingleProductPage({
 		revalidateTag("cart");
 	}
 
+	const productUrl = `/product/${product.id}` as Route<"productId">;
+
 	return (
 		<article className="mx-auto max-w-xl">
 			<div className="flex flex-col justify-between">
-				<ProductCoverImage images={product.images} />
+				<ProductCoverImage
+					productUrl={productUrl}
+					images={product.images}
+				/>
 				<h1 className="mb-2 text-3xl font-bold">{product.name}</h1>
 				<p className="my-2">price:{product.price}</p>
 				<p className="my-2">{product.categories[0]?.name}</p>

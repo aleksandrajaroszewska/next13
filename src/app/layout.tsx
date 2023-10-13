@@ -16,8 +16,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
+	modal,
 }: {
 	children: React.ReactNode;
+	modal: React.ReactNode;
 }) {
 	return (
 		<html lang="pl">
@@ -27,6 +29,7 @@ export default function RootLayout({
 				<main className="flex min-h-screen  bg-fuchsia-800 font-sans text-fuchsia-100">
 					{children}
 				</main>
+				{modal}
 				<footer className="bg-fuchsia-950 text-fuchsia-100">
 					<div className="container mx-auto flex flex-col flex-wrap px-5 py-4 sm:flex-row">
 						<p className="text-center text-sm text-fuchsia-100 sm:text-left">

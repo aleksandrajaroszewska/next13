@@ -3,6 +3,7 @@ import { ActiveLink } from "../atoms/ActiveLink";
 import { cookies } from "next/headers";
 import { executeGraphql } from "@/api/graphQlApi";
 import { CartGetByIdDocument } from "@/gql/graphql";
+import { Route } from "next";
 
 export async function Navigation() {
 	const cartId = cookies().get("cartId")?.value;
@@ -16,6 +17,8 @@ export async function Navigation() {
 		: null;
 
 	const quantity = cart?.order?.orderItems.length ?? 0;
+
+	const modalUrl = "/cart" as Route<"string">;
 
 	return (
 		<nav className=" sticky top-0 z-10 opacity-70" role="navigation">
@@ -51,7 +54,7 @@ export async function Navigation() {
 				</li>
 				<li className="flex">
 					<ShoppingCart color="white" size={20} />
-					<ActiveLink className="ml-2" href="/cart">
+					<ActiveLink className="ml-2" href={modalUrl}>
 						Cart ({quantity})
 					</ActiveLink>
 				</li>
