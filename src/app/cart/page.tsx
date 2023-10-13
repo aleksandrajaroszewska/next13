@@ -21,7 +21,6 @@ export default async function CartPage() {
 	return (
 		<section className="m-auto p-4  ">
 			<h1 className="bold py-8 text-xl  ">Order summary</h1>
-			<Link href="/cart">Details</Link>
 			<table>
 				<thead>
 					<tr className="p-2">
