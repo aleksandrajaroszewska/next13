@@ -7,7 +7,7 @@ import {
 	useRouter,
 	useSelectedLayoutSegment,
 } from "next/navigation";
-import { NextRouter } from "next/router";
+
 import { Route } from "next";
 import { type ReactNode } from "react";
 

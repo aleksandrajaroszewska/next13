@@ -7,6 +7,7 @@ export default async function ProductsPage({
 }: {
 	params: { pageNumber: string };
 }) {
+	// await new Promise((resolve) => setTimeout(resolve, 1000));
 	const productsByPage = await getProductsByPage(
 		Number(params.pageNumber) || 1,
 	);
