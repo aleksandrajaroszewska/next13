@@ -18,10 +18,7 @@ export const ProductListItem = ({
 				className="group mb-6 block w-56 cursor-pointer bg-white shadow transition duration-300 ease-in-out hover:shadow-lg md:mb-0 lg:mb-0 xl:mb-0"
 				href={productUrl}
 			>
-				<ProductCoverImage
-					productUrl={productUrl}
-					images={product.images}
-				/>
+				<ProductCoverImage images={product.images} />
 				<ProductListItemDescription product={product} />
 			</Link>
 		</li>

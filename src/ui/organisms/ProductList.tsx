@@ -1,4 +1,3 @@
-import { getProductList } from "@/api/products";
 import { ProductListItem } from "@/ui/molecules/ProductListItem";
 import { ProductListItemFragment } from "@/gql/graphql";
 
