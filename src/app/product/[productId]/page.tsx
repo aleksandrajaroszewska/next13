@@ -71,10 +71,7 @@ export default async function SingleProductPage({
 	return (
 		<article className="mx-auto max-w-xl">
 			<div className="flex flex-col justify-between">
-				<ProductCoverImage
-					productUrl={productUrl}
-					images={product.images}
-				/>
+				<ProductCoverImage images={product.images} />
 				<h1 className="mb-2 text-3xl font-bold">{product.name}</h1>
 				<p className="my-2">price:{product.price}</p>
 				<p className="my-2">{product.categories[0]?.name}</p>
