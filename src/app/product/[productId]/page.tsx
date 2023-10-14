@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/cart";
 import { revalidatePath, revalidateTag } from "next/cache";
+import RelatedProducts from "@/ui/organisms/RelatedProducts";
 
 export const generateMetadata = async ({
 	params,
@@ -21,7 +22,7 @@ export const generateMetadata = async ({
 	}
 
 	return {
-		title: `product ${product.name}`,
+		title: `${product.name}`,
 		description: product.description,
 		openGraph: {
 			title: product.name,
@@ -81,6 +82,7 @@ export default async function SingleProductPage({
 					<AddToCartButton />
 				</form>
 			</div>
+			<RelatedProducts />
 		</article>
 	);
 }

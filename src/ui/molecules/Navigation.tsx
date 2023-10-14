@@ -25,7 +25,16 @@ export async function Navigation() {
 			className="sticky top-0 z-10 flex  opacity-70"
 			role="navigation"
 		>
+			<div className="flex w-40 items-center">
+				<ShoppingCart color="white" size={20} />
+				<ActiveLink className="ml-2 text-white" href={modalUrl}>
+					Cart ({quantity})
+				</ActiveLink>
+			</div>
 			<ul className="flex w-full items-center justify-between bg-fuchsia-900 px-24 py-4 text-fuchsia-100 ">
+				<li role="link" className="text-fuchsia-100">
+					<ActiveLink href="/collections">collections</ActiveLink>
+				</li>
 				<li role="link" className="text-fuchsia-100">
 					<ActiveLink exact={true} href="/">
 						Home
@@ -36,16 +45,12 @@ export async function Navigation() {
 						all
 					</ActiveLink>
 				</li>
-				<li className="text-fuchsia-100">
-					<ActiveLink href="/categories">categories</ActiveLink>
+				<li role="link" className="text-fuchsia-100">
+					<ActiveLink href="/categories/accessories">
+						categories
+					</ActiveLink>
 				</li>
 			</ul>
-			<div className="flex w-40 items-center">
-				<ShoppingCart color="white" size={20} />
-				<ActiveLink className="ml-2 text-white" href={modalUrl}>
-					Cart ({quantity})
-				</ActiveLink>
-			</div>
 		</nav>
 	);
 }

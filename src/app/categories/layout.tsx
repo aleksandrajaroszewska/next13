@@ -1,5 +1,6 @@
 import { getProductsRelated } from "@/api/products";
 import ProductList from "@/ui/organisms/ProductList";
+import RelatedProducts from "@/ui/organisms/RelatedProducts";
 
 import { ReactNode, Suspense } from "react";
 
@@ -10,15 +11,8 @@ export default async function ProductsLayout({
 }) {
 	const products = await getProductsRelated();
 	return (
-		<div
-			data-testid="related-products"
-			className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-12 gap-x-8 bg-fuchsia-800"
-		>
-			<aside className="col-span-3 mb-8 mt-8 bg-fuchsia-950 px-8 py-4 shadow-xl">
-				<h2 className="mb-4 text-xl font-bold">Polecane produkty</h2>
-
-				<ProductList products={products} />
-			</aside>
+		<div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-12 gap-x-8 bg-fuchsia-800">
+			<RelatedProducts />
 			<main className="col-span-9 px-8 py-4 shadow-xl">
 				{children}
 			</main>
