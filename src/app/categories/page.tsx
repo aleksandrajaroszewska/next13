@@ -20,7 +20,7 @@ export default async function ProductsPage() {
 				Akcesoria
 			</NextLink>
 			<NextLink
-				className="text-lext mb-4 block w-full uppercase"
+				className="mb-4 block w-full uppercase"
 				href="/categories/t-shirts"
 			>
 				T-shirty

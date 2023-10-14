@@ -58,7 +58,7 @@ export const getProductsByCategorySlug = async (
 	categorySlug: string,
 	page: number,
 ) => {
-	const productsPerPage = 4;
+	const productsPerPage = 2;
 	const offset = (page - 1) * productsPerPage;
 	const categories = await executeGraphql({
 		query: ProductsGetByCategorySlugDocument,

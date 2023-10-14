@@ -47,7 +47,7 @@ export default async function CategoryProductsPage({
 				currentPage={
 					params.pageNumber ? Number(params.pageNumber) : 1
 				}
-				totalPages={1}
+				totalPages={2}
 				pageType={`categories/${chosenCategory}`}
 			/>
 		</div>
