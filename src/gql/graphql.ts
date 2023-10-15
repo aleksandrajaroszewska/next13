@@ -10990,7 +10990,7 @@ export const ProductGetByPageDocument = new TypedDocumentString(`
 }`) as unknown as TypedDocumentString<ProductGetByPageQuery, ProductGetByPageQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList {
-  products(first: 10) {
+  products(first: 20) {
     id
     name
     description
