@@ -3,10 +3,6 @@ import { formatMoney } from "@/utils";
 
 import { redirect } from "next/navigation";
 
-import Stripe from "stripe";
-import { cookies } from "next/headers";
-
-import Link from "next/link";
 import { IncrementProductQuantity } from "./IncrementProductQuantity";
 import { RemoveButton } from "./RemoveButton";
 import { handleStripePaymentAction } from "./actions";
@@ -45,6 +41,7 @@ export default async function CartPage() {
 										itemId={item.id}
 									/>
 								</td>
+
 								<td className="p-4">
 									{formatMoney(item.product.price)}
 								</td>

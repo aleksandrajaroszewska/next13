@@ -12,7 +12,6 @@ import {
 
 export async function getCartByIdFromCookies() {
 	const cartId = cookies().get("cartId")?.value;
-	console.log("cartId", cartId);
 
 	if (cartId) {
 		const cart = await executeGraphql({
@@ -31,14 +30,12 @@ export async function getCartByIdFromCookies() {
 
 export async function getOrCreateCart() {
 	const existingCart = await getCartByIdFromCookies();
-	console.log("existingCart", existingCart);
 
 	if (existingCart) {
 		return existingCart;
 	}
 
 	const cart = await createCart();
-	console.log("cart", cart);
 
 	if (!cart.createOrder) {
 		throw new Error("Failed to create cart");
@@ -48,8 +45,6 @@ export async function getOrCreateCart() {
 		httpOnly: true,
 		sameSite: "lax",
 	});
-
-	console.log("cart.createOrder", cart.createOrder);
 
 	return cart.createOrder;
 }

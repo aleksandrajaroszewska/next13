@@ -18,7 +18,7 @@ export async function Navigation() {
 		  })
 		: null;
 
-	const quantity = cart?.order?.orderItems.length ?? 0;
+	const quantity = cart?.order?.orderItems.length ?? 1;
 
 	const modalUrl = "/cart" as Route<"string">;
 
