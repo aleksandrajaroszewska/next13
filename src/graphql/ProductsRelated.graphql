@@ -1,5 +1,5 @@
-query ProductsGetList {
-	products(first: 20) {
+query ProductsRelated {
+	products(first: 4) {
 		id
 		name
 		description

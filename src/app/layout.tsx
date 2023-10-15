@@ -5,14 +5,15 @@ import { Montserrat } from "next/font/google";
 import { ShoppingCart } from "lucide-react";
 import { Navigation } from "@/ui/molecules/Navigation";
 import clsx from "clsx";
+import { getProductsById } from "@/api/products";
 
 const montserrat = Montserrat({
 	subsets: ["latin", "latin-ext"],
 });
 
-export const metadata: Metadata = {
-	title: "13next",
-};
+// export const metadata: Metadata = {
+// 	title: "ttttt",
+// };
 
 export default function RootLayout({
 	children,
@@ -25,7 +26,6 @@ export default function RootLayout({
 		<html lang="pl">
 			<body className={clsx(montserrat.className, "bg-fuchsia-800")}>
 				<Navigation />
-
 				<main className="flex min-h-screen  bg-fuchsia-800 font-sans text-fuchsia-100">
 					{children}
 				</main>

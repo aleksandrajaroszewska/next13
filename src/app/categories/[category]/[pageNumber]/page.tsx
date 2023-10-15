@@ -3,6 +3,7 @@ import ProductList from "@/ui/organisms/ProductList";
 
 import { notFound } from "next/navigation";
 import { Pagination } from "@/ui/molecules/Pagination";
+import { Metadata } from "next";
 
 // export async function generateStaticParams({
 // 	params,
@@ -18,6 +19,20 @@ import { Pagination } from "@/ui/molecules/Pagination";
 // 	}
 // 	return [];
 // }
+
+// export const generateMetadata = async ({
+// 	params,
+// }: {
+// 	params: { category: string };
+// }): Promise<Metadata> => {
+// 	return {
+// 		title: ` ${params.category}`,
+// 	};
+// };
+
+export const metadata: Metadata = {
+	title: "categories",
+};
 
 export default async function CategoryProductsPage({
 	params,
@@ -47,7 +62,7 @@ export default async function CategoryProductsPage({
 				currentPage={
 					params.pageNumber ? Number(params.pageNumber) : 1
 				}
-				totalPages={1}
+				totalPages={2}
 				pageType={`categories/${chosenCategory}`}
 			/>
 		</div>

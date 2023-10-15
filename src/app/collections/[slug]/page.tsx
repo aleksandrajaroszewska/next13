@@ -1,18 +1,43 @@
 import Link from "next/link";
 import { getCollectionsList } from "@/api/products";
+import { Metadata } from "next";
+
+// export const generateMetadata = async ({
+// 	params,
+// }: {
+// 	params: { productId: string };
+// }): Promise<Metadata> => {
+// 	const collection = await getCollectionsList();
+// 	if (!collection) {
+// 		return {
+// 			title: "Collection not found",
+// 		};
+// 	}
+
+// 	return {
+// 		title: `${collection[0]?.name}`,
+// 	};
+// };
+
+export const metadata: Metadata = {
+	title: "collections",
+};
 
 export default async function CollectionsList() {
 	const collections = await getCollectionsList();
 
 	return (
 		<div>
-			<h1 className="">Collections List</h1>
 			<ul>
-				{collections.map((category) => {
+				<h1 role="heading" className="">
+					collections
+				</h1>
+
+				{collections.map((collection) => {
 					return (
-						<li key={category.slug}>
-							<Link href={`/collections/${category.slug}`}>
-								{category.name}
+						<li key={collection.slug}>
+							<Link href={`/collections/${collection.slug}`}>
+								{collection.name}
 							</Link>
 						</li>
 					);

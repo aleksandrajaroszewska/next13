@@ -6,12 +6,25 @@ import {
 	ProductGetByPageDocument,
 	ProductsCountDocument,
 	CollectionsGetListDocument,
+	ProductsRelatedDocument,
 } from "@/gql/graphql";
 import { executeGraphql } from "./graphQlApi";
 
 export const getProductList = async () => {
 	const graphqlResponse = await executeGraphql({
 		query: ProductsGetListDocument,
+		variables: {},
+		next: {
+			revalidate: 15,
+		},
+	});
+
+	return graphqlResponse.products;
+};
+
+export const getProductsRelated = async () => {
+	const graphqlResponse = await executeGraphql({
+		query: ProductsRelatedDocument,
 		variables: {},
 		next: {
 			revalidate: 15,
@@ -40,7 +53,7 @@ export const getProductCount = async () => {
 };
 
 export const getProductsByPage = async (page: number) => {
-	const productsPerPage = 4;
+	const productsPerPage = 6;
 	const offset = (page - 1) * productsPerPage;
 
 	const graphqlResponse = await executeGraphql({

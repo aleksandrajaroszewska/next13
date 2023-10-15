@@ -13,11 +13,10 @@ export const ProductListItemDescription = ({
 }: ProductListItemDescriptionProps) => {
 	return (
 		<div className="bg-white px-4 py-3">
-			<Link href={`/product/${product.id}`}>
-				<h3 className="truncate text-lg font-semibold text-gray-800 transition duration-300 ease-in-out hover:text-red-500">
-					{product.name}
-				</h3>
-			</Link>
+			<h3 className="truncate text-lg font-semibold text-gray-800 transition duration-300 ease-in-out hover:text-red-500">
+				{product.name}
+			</h3>
+
 			<p className="mr-2 text-xs text-gray-800">
 				{product.categories[0]?.name}
 			</p>

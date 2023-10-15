@@ -10801,6 +10801,11 @@ export type ProductsGetByRecommendedCategoryQueryVariables = Exact<{
 
 export type ProductsGetByRecommendedCategoryQuery = { categories: Array<{ products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> }> };
 
+export type ProductsRelatedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductsRelatedQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -10985,7 +10990,7 @@ export const ProductGetByPageDocument = new TypedDocumentString(`
 }`) as unknown as TypedDocumentString<ProductGetByPageQuery, ProductGetByPageQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList {
-  products(first: 10) {
+  products(first: 20) {
     id
     name
     description
@@ -11019,3 +11024,19 @@ export const ProductsGetByRecommendedCategoryDocument = new TypedDocumentString(
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetByRecommendedCategoryQuery, ProductsGetByRecommendedCategoryQueryVariables>;
+export const ProductsRelatedDocument = new TypedDocumentString(`
+    query ProductsRelated {
+  products(first: 4) {
+    id
+    name
+    description
+    categories(first: 1) {
+      name
+    }
+    images(first: 1) {
+      url
+    }
+    price
+  }
+}
+    `) as unknown as TypedDocumentString<ProductsRelatedQuery, ProductsRelatedQueryVariables>;
