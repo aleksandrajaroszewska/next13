@@ -2483,6 +2483,46 @@ export type DocumentVersion = {
   stage: Stage;
 };
 
+/** An object with an ID */
+export type Entity = {
+  /** The id of the object. */
+  id: Scalars['ID']['output'];
+  /** The Stage of an object */
+  stage: Stage;
+};
+
+/** This enumeration holds all typenames that implement the Entity interface. Components implement the Entity interface. At the moment models are not supported, models are listed in this enum to avoid an empty enum without any components. */
+export type EntityTypeName =
+  /** Asset system model */
+  | 'Asset'
+  /** Category of products, e.g. Menswear. */
+  | 'Category'
+  /** Collection of products, e.g. Winter Sale. */
+  | 'Collection'
+  | 'Currency'
+  | 'Order'
+  | 'OrderItem'
+  | 'Product'
+  | 'ProductColorVariant'
+  | 'ProductSizeColorVariant'
+  | 'ProductSizeVariant'
+  | 'Review'
+  /** Scheduled Operation system model */
+  | 'ScheduledOperation'
+  /** Scheduled Release system model */
+  | 'ScheduledRelease'
+  /** User system model */
+  | 'User';
+
+/** Allows to specify input to query components directly */
+export type EntityWhereInput = {
+  /** The ID of an object */
+  id: Scalars['ID']['input'];
+  stage: Stage;
+  /** The Type name of an object */
+  typename: EntityTypeName;
+};
+
 export type ImageFit =
   /** Resizes the image to fit within the specified parameters without distorting, cropping, or changing the aspect ratio. */
   | 'clip'
@@ -7980,6 +8020,8 @@ export type Query = {
   /** Retrieve document version */
   currencyVersion?: Maybe<DocumentVersion>;
   /** Fetches an object given its ID */
+  entities?: Maybe<Array<Entity>>;
+  /** Fetches an object given its ID */
   node?: Maybe<Node>;
   /** Retrieve a single order */
   order?: Maybe<Order>;
@@ -8207,6 +8249,11 @@ export type QueryCurrencyArgs = {
 
 export type QueryCurrencyVersionArgs = {
   where: VersionWhereInput;
+};
+
+
+export type QueryEntitiesArgs = {
+  where: Array<EntityWhereInput>;
 };
 
 
@@ -10716,13 +10763,15 @@ export type _SystemDateTimeFieldVariation =
   | 'localization';
 
 export type CartAddProductMutationVariables = Exact<{
-  orderId: Scalars['ID']['input'];
-  total: Scalars['Int']['input'];
+  cartId: Scalars['ID']['input'];
   productId: Scalars['ID']['input'];
+  total: Scalars['Int']['input'];
+  quantity: Scalars['Int']['input'];
+  orderItemId?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
-export type CartAddProductMutation = { createOrderItem?: { id: string } | null };
+export type CartAddProductMutation = { upsertOrderItem?: { id: string } | null };
 
 export type CartCreateMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -10851,9 +10900,10 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
 }
     `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
 export const CartAddProductDocument = new TypedDocumentString(`
-    mutation CartAddProduct($orderId: ID!, $total: Int!, $productId: ID!) {
-  createOrderItem(
-    data: {product: {connect: {id: $productId}}, order: {connect: {id: $orderId}}, quantity: 1, total: $total}
+    mutation CartAddProduct($cartId: ID!, $productId: ID!, $total: Int!, $quantity: Int!, $orderItemId: ID) {
+  upsertOrderItem(
+    upsert: {create: {quantity: $quantity, total: $total, product: {connect: {id: $productId}}, order: {connect: {id: $cartId}}}, update: {quantity: $quantity, total: $total, product: {connect: {id: $productId}}, order: {connect: {id: $cartId}}}}
+    where: {id: $orderItemId}
   ) {
     id
   }

@@ -30,7 +30,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 	) as Stripe.DiscriminatedEvent;
 
 	//ti see objects in console
-	console.dir(event, { depth: 999 });
+	// console.dir(event, { depth: 999 });
 
 	switch (event.type) {
 		// each  block should have mutation to graphql and change order status

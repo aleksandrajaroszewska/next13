@@ -1,12 +1,12 @@
 import { executeGraphql } from "./graphQlApi";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { get } from "http";
+
 import {
 	CartAddProductDocument,
 	CartCreateDocument,
 	CartFragment,
 	CartGetByIdDocument,
+	ProductListItemFragment,
 	ProductsGetByIdDocument,
 } from "@/gql/graphql";
 
@@ -57,27 +57,60 @@ export function createCart() {
 	});
 }
 
-export async function addProductToCart(
-	orderId: string,
-	productId: string,
-) {
-	const { product } = await executeGraphql({
-		query: ProductsGetByIdDocument,
-		variables: {
-			id: productId,
-		},
-		cache: "no-store",
-	});
-	if (!product) {
-		throw new Error(`Product with id ${productId} not found`);
-	}
+// export async function addProductToCart(
+// 	cartId: string,
+// 	productId: string,
+// 	qty?: number,
+// ) {
+// 	const { product } = await executeGraphql({
+// 		query: ProductsGetByIdDocument,
+// 		variables: {
+// 			id: productId,
+// 		},
+// 		cache: "no-store",
+// 	});
+// 	if (!product) {
+// 		throw new Error(`Product with id ${productId} not found`);
+// 	}
 
-	await executeGraphql({
+// 	// $cartId: ID!
+// 	// $productId: ID!
+// 	// $total: Int!
+// 	// $quantity: Int!
+// 	// $orderItemId: ID
+
+// 	await executeGraphql({
+// 		query: CartAddProductDocument,
+// 		variables: {
+// 			cartId,
+// 			quantity: qty || 1,
+// 			productId,
+// 			total: product.price,
+// 			orderItemId: undefined,
+// 		},
+// 		cache: "no-store",
+// 	});
+// }
+
+export async function addProductToCart(
+	cart: CartFragment,
+	product: ProductListItemFragment,
+) {
+	const productId = product.id;
+	const productInCart = cart.orderItems.find((item) =>
+		item.product?.id === productId ? item : null,
+	);
+
+	return executeGraphql({
 		query: CartAddProductDocument,
 		variables: {
-			orderId,
-			total: product.price,
-			productId,
+			cartId: cart.id,
+			productId: productId,
+			orderItemId: productInCart ? productInCart.id : null,
+			quantity: productInCart ? productInCart.quantity + 1 : 1,
+			total: productInCart
+				? productInCart.total * (productInCart.quantity + 1)
+				: product.price,
 		},
 		cache: "no-store",
 	});

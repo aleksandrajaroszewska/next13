@@ -63,7 +63,11 @@ export default async function SingleProductPage({
 		"use server";
 		const cart = await getOrCreateCart();
 
-		await addProductToCart(cart.id, params.productId);
+		if (!product) {
+			return;
+		}
+
+		await addProductToCart(cart, product);
 		revalidateTag("cart");
 	}
 

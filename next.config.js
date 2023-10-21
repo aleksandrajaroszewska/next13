@@ -6,6 +6,7 @@ const nextConfig = {
 		mdxRs: true,
 		serverActions: true,
 	},
+
 	images: {
 		domains: ["media.graphassets.com"],
 	},
