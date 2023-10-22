@@ -29,7 +29,7 @@ export const SortProducts = (props: SortProductsProps) => {
 			name="sort"
 			value={orderBy}
 			onChange={sortByHandler}
-			className="w-36 text-gray-950"
+			className=" m-8 w-36 text-gray-950"
 		>
 			{SortOrderData.map((item, index) => (
 				<option

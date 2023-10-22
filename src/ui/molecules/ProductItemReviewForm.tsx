@@ -9,7 +9,11 @@ import {
 
 import { publishProduct } from "@/actions/products";
 import { ReviewsFormData } from "@/mocks/ReviewsFormData";
-import { createReview, publishReview } from "@/actions/reviews";
+import {
+	createReview,
+	publishReview,
+	updateAverageRating,
+} from "@/actions/reviews";
 
 export const ProductItemReviewForm = async (props: {
 	product: ProductListItemFragment;
@@ -18,8 +22,6 @@ export const ProductItemReviewForm = async (props: {
 
 	const addReviewAction = async (formData: FormData) => {
 		"use server";
-
-		console.log(formData);
 
 		const reviews = product.reviews;
 		const review: ReviewItemFragment = {
@@ -36,13 +38,12 @@ export const ProductItemReviewForm = async (props: {
 
 		const newReview = await createReview(review);
 
-		console.log(newReview, "newReview");
-
 		if (!newReview.createReview) {
 			throw new Error("Failed to create review");
 		}
 
 		await publishReview(newReview.createReview.id);
+		await updateAverageRating(product.id, allReviews);
 
 		await publishProduct(product.id);
 		revalidateTag("product");
@@ -50,7 +51,7 @@ export const ProductItemReviewForm = async (props: {
 
 	return (
 		<form
-			className="flex flex-col gap-4"
+			className="m-8 flex flex-col gap-2"
 			data-testid="add-review-form"
 			action={addReviewAction}
 		>
@@ -64,7 +65,7 @@ export const ProductItemReviewForm = async (props: {
 					</label>
 					<input
 						id={input.name}
-						className="border border-gray-900"
+						className="border border-gray-900 text-black"
 						name={input.name}
 						type={input.type}
 						min={input.min}

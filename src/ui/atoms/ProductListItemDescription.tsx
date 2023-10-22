@@ -20,8 +20,9 @@ export const ProductListItemDescription = ({
 			<p className="mr-2 text-xs text-gray-800">
 				{product.categories[0]?.name}
 			</p>
+
 			<div className="text-black" data-testid="product-rating">
-				{(product.price / 1000).toFixed(2)}
+				{product.averageRating || 0}/5
 			</div>
 			<div className="flex py-2">
 				<p

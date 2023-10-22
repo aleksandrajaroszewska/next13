@@ -74,8 +74,8 @@ export default async function SingleProductPage({
 	const productUrl = `/product/${product.id}` as Route<"productId">;
 
 	return (
-		<article className="mx-auto max-w-xl">
-			<div className="flex flex-col justify-between">
+		<article className="mx-auto">
+			<div className="flex w-full max-w-xl flex-col justify-between p-8">
 				<ProductCoverImage images={product.images} />
 				<h1 className="mb-2 text-3xl font-bold">{product.name}</h1>
 				<p className="my-2">price:{product.price}</p>
@@ -86,9 +86,8 @@ export default async function SingleProductPage({
 					<AddToCartButton />
 				</form>
 			</div>
-			<ProductItemReview product={product} />
-
 			<RelatedProducts />
+			<ProductItemReview product={product} />
 		</article>
 	);
 }

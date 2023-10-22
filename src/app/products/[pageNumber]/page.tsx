@@ -47,7 +47,7 @@ export default async function ProductsPage({
 					params.pageNumber ? Number(params.pageNumber) : 1
 				}
 				pageType="products"
-				totalPages={totalPages / 4 + 1}
+				totalPages={3}
 			/>
 		</main>
 	);

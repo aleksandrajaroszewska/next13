@@ -18,7 +18,7 @@ export async function Navigation() {
 	return (
 		<div className="sticky top-0 z-10 flex  opacity-70">
 			<nav className="w-full bg-fuchsia-900 " role="navigation">
-				<ul className="flex items-center justify-between bg-fuchsia-900 px-24 py-4 text-fuchsia-100 ">
+				<ul className="flex h-full items-center justify-between bg-fuchsia-900 px-24 py-4 text-fuchsia-100 ">
 					<li role="link" className="text-fuchsia-100">
 						<ActiveLink exact={true} href="/">
 							Home
@@ -41,7 +41,7 @@ export async function Navigation() {
 				</ul>
 			</nav>
 			<Search />
-			<div className="flex w-40 items-center">
+			<div className="flex w-40 items-center bg-fuchsia-900 ">
 				<ShoppingCart color="white" size={20} />
 				<ActiveLink className="ml-4 mr-4 text-white" href={modalUrl}>
 					Cart<span>({quantity})</span>

@@ -8,6 +8,7 @@ import {
 	CollectionsGetListDocument,
 	ProductsRelatedDocument,
 	ProductOrderByInput,
+	CollectionsGetListBySlugDocument,
 } from "@/gql/graphql";
 import { executeGraphql } from "./graphQlApi";
 import { notFound } from "next/dist/client/components/not-found";
@@ -65,6 +66,19 @@ export const getCollectionsList = async () => {
 	});
 
 	return graphqlResponse.collections;
+};
+
+export const getCollectionsListBySlug = async (params: {
+	slug: string;
+}) => {
+	const { collections } = await executeGraphql({
+		query: CollectionsGetListBySlugDocument,
+		variables: { slug: params.slug },
+	});
+
+	if (!collections) notFound();
+
+	return collections;
 };
 
 export const getProductCount = async () => {

@@ -1,6 +1,13 @@
 import Link from "next/link";
-import { getCollectionsList } from "@/api/products";
+import {
+	getCollectionsList,
+	getCollectionsListBySlug,
+} from "@/api/products";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { ProductListItem } from "@/ui/molecules/ProductListItem";
+import ProductsList from "@/ui/organisms/ProductList";
+import ProductList from "@/ui/organisms/ProductList";
 
 // export const generateMetadata = async ({
 // 	params,
@@ -23,19 +30,30 @@ export const metadata: Metadata = {
 	title: "collections",
 };
 
-export default async function CollectionsList() {
+type CollectionsPageParams = {
+	params: {
+		slug: string;
+	};
+};
+
+export default async function CollectionsList({
+	params,
+}: CollectionsPageParams) {
+	const { slug } = params;
 	const collections = await getCollectionsList();
+	const collectionBySlug = await getCollectionsListBySlug({ slug });
+
+	if (!collections[0]) throw notFound();
 
 	return (
-		<div>
-			<ul>
-				<h1 role="heading" className="">
-					collections
-				</h1>
-
+		<section className="flex flex-col">
+			<h1 className="mx-16 py-4 text-xl" role="heading">
+				collections
+			</h1>
+			<ul className="l mx-12 flex w-full border-slate-950">
 				{collections.map((collection) => {
 					return (
-						<li key={collection.slug}>
+						<li className="p-4" key={collection.name}>
 							<Link href={`/collections/${collection.slug}`}>
 								{collection.name}
 							</Link>
@@ -43,6 +61,16 @@ export default async function CollectionsList() {
 					);
 				})}
 			</ul>
-		</div>
+			<div className="flex w-full flex-col justify-around bg-fuchsia-800 p-8 text-xl">
+				{collectionBySlug.map((collection) => {
+					return (
+						<ProductList
+							key={collection.id}
+							products={collection.products}
+						/>
+					);
+				})}
+			</div>
+		</section>
 	);
 }

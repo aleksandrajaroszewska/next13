@@ -32,7 +32,7 @@ export const Search = () => {
 
 	return (
 		<input
-			className="mb-4 rounded-md border border-gray-300 px-4 py-2"
+			className="my-4 mr-4 rounded-md border border-gray-300 px-4 py-2 "
 			value={query}
 			onChange={onChange}
 			type="search"
