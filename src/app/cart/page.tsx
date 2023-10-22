@@ -3,16 +3,24 @@ import { formatMoney } from "@/utils";
 
 import { redirect } from "next/navigation";
 
-import { IncrementProductQuantity } from "./IncrementProductQuantity";
+import { IncrementProductQuantity } from "../../ui/atoms/IncrementProductQuantity";
 import { RemoveButton } from "./RemoveButton";
 import { handleStripePaymentAction } from "./actions";
 
 export default async function CartPage() {
 	const cart = await getCartByIdFromCookies();
+
 	if (!cart) {
 		console.log("no cart");
 		redirect("/");
 	}
+
+	// const totalQuantity = cart?.orderItems.reduce(
+	// 	(total, item) => total + item.quantity,
+	// 	0,
+	// );
+
+	const quantity = cart?.orderItems.length ?? 0;
 
 	return (
 		<section className="m-auto p-4  ">
@@ -53,6 +61,10 @@ export default async function CartPage() {
 					})}
 				</tbody>
 			</table>
+			<p>
+				total quantity:
+				<span>{quantity}</span>
+			</p>
 
 			<div>
 				<form

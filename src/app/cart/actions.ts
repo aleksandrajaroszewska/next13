@@ -6,6 +6,7 @@ import {
 	CartRemoveProductDocument,
 	CartSetProductQuantityDocument,
 } from "@/gql/graphql";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import stripe, { Stripe } from "stripe";
@@ -20,7 +21,9 @@ export const changeItemQuantity = (
 			itemId,
 			quantity,
 		},
+		cache: "no-store",
 	});
+	revalidateTag("cart");
 };
 
 export const removeItem = (itemId: string) => {

@@ -10,5 +10,9 @@ query ProductsRelated {
 			url
 		}
 		price
+		reviews {
+			...ReviewItem
+		}
+		averageRating
 	}
 }

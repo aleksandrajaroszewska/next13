@@ -1,12 +1,6 @@
-import { getProductList } from "@/api/products";
-import ProductList from "@/ui/organisms/ProductList";
 import NextLink from "next/link";
 
 export default async function ProductsPage() {
-	const products = await getProductList();
-	if (!products) {
-		return <div>Products not found</div>;
-	}
 	return (
 		<main
 			className={
@@ -31,7 +25,6 @@ export default async function ProductsPage() {
 			>
 				Bluzy
 			</NextLink>
-			{/* <ProductList products={products} /> */}
 		</main>
 	);
 }

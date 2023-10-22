@@ -1,44 +1,54 @@
+# mutation CartAddProduct($orderId: ID!, $qty: Int!, $productId: ID!) {
+# 	createOrderItem(
+# 		data: {
+# 			product: { connect: { id: $productId } }
+# 			order: { connect: { id: $orderId } }
+# 			quantity: $qty
+# 			total: 0
+# 		}
+# 	) {
+# 		id
+# 	}
+# }
+
+# mutation ShoppingCartAddItem(
+# 	$cartId: String!
+# 	$productItemId: String!
+# 	$qty: Int
+# ) {
+# 	addItemToCart(
+# 		cartId: $cartId
+# 		productItemId: $productItemId
+# 		qty: $qty
+# 	) {
+# 		id
+# 	}
+# }
+
 mutation CartAddProduct(
-	$orderId: ID!
-	$total: Int!
+	$cartId: ID!
 	$productId: ID!
+	$total: Int!
+	$quantity: Int!
+	$orderItemId: ID
 ) {
-	createOrderItem(
-		data: {
-			product: { connect: { id: $productId } }
-			order: { connect: { id: $orderId } }
-			quantity: 1
-			total: $total
+	upsertOrderItem(
+		upsert: {
+			create: {
+				quantity: $quantity
+				total: $total
+				product: { connect: { id: $productId } }
+				order: { connect: { id: $cartId } }
+			}
+			update: {
+				quantity: $quantity
+				total: $total
+				product: { connect: { id: $productId } }
+				order: { connect: { id: $cartId } }
+			}
 		}
+		where: { id: $orderItemId }
 	) {
 		id
 	}
 }
-
-# mutation CartAddProduct(
-# 	$cartId: ID!
-# 	$productId: ID!
-# 	$total: Int!
-# 	$quantity: Int!
-# 	$orderItemId: ID
-# ) {
-# 	upsertOrderItem(
-# 		upsert: {
-# 			create: {
-# 				quantity: $quantity
-# 				total: $total
-# 				product: { connect: { id: $productId } }
-# 				order: { connect: { id: $cartId } }
-# 			}
-# 			update: {
-# 				quantity: $quantity
-# 				total: $total
-# 				product: { connect: { id: $productId } }
-# 				order: { connect: { id: $cartId } }
-# 			}
-# 		}
-# 		where: { id: $orderItemId }
-# 	) {
-# 		...CartOrderItem
-# 	}
-# }

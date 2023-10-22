@@ -2,12 +2,12 @@ import { Route, type Metadata } from "next";
 
 import { getProductsById } from "@/api/products";
 import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
-import { cookies } from "next/headers";
 
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/cart";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import RelatedProducts from "@/ui/organisms/RelatedProducts";
+import { ProductItemReview } from "@/ui/organisms/ProductsReviews";
 
 export const generateMetadata = async ({
 	params,
@@ -63,15 +63,19 @@ export default async function SingleProductPage({
 		"use server";
 		const cart = await getOrCreateCart();
 
-		await addProductToCart(cart.id, params.productId);
+		if (!product) {
+			return;
+		}
+
+		await addProductToCart(cart, product);
 		revalidateTag("cart");
 	}
 
 	const productUrl = `/product/${product.id}` as Route<"productId">;
 
 	return (
-		<article className="mx-auto max-w-xl">
-			<div className="flex flex-col justify-between">
+		<article className="mx-auto">
+			<div className="flex w-full max-w-xl flex-col justify-between p-8">
 				<ProductCoverImage images={product.images} />
 				<h1 className="mb-2 text-3xl font-bold">{product.name}</h1>
 				<p className="my-2">price:{product.price}</p>
@@ -83,6 +87,7 @@ export default async function SingleProductPage({
 				</form>
 			</div>
 			<RelatedProducts />
+			<ProductItemReview product={product} />
 		</article>
 	);
 }

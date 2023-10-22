@@ -7,7 +7,7 @@ export default async function SuccessPage({
 	searchParams: { session_id: string };
 }) {
 	if (!searchParams.session_id) {
-		redirect("/sdsdsd");
+		redirect("/");
 	}
 
 	if (!process.env.STRIPE_SECRET_KEY) {

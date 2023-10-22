@@ -11,11 +11,9 @@ export default async function ProductsLayout({
 }) {
 	const products = await getProductsRelated();
 	return (
-		<div className="mx-auto grid min-h-screen w-full max-w-7xl grid-cols-12 gap-x-8 bg-fuchsia-800">
+		<div className="mx-auto  min-h-screen w-full gap-x-8 bg-fuchsia-800">
+			<main className="px-8 py-4 shadow-xl">{children}</main>
 			<RelatedProducts />
-			<main className="col-span-9 px-8 py-4 shadow-xl">
-				{children}
-			</main>
 		</div>
 	);
 }

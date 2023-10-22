@@ -1,5 +1,5 @@
 import { getCartByIdFromCookies } from "@/api/cart";
-import { Overlay } from "@/app/@modal/(.)cart/Overlay";
+// import { Overlay } from "@/app/@modal/(.)cart/Overlay";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -8,7 +8,7 @@ export default async function ModalCart() {
 
 	return (
 		<>
-			<Overlay />
+			{/* <Overlay /> */}
 			<div className="absolute right-0 top-0 z-40 h-screen w-full max-w-sm rounded-xl bg-fuchsia-900 p-6 text-fuchsia-100">
 				<h2 className={"m-8 text-xl font-bold text-fuchsia-100"}>
 					Cart Summary
