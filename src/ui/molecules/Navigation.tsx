@@ -5,7 +5,7 @@ import { executeGraphql } from "@/api/graphQlApi";
 import { CartGetByIdDocument } from "@/gql/graphql";
 import { Route } from "next";
 import { Search } from "../atoms/Search";
-import { getProductList } from "@/api/products";
+import { getProductsList } from "@/api/products";
 import { getCartByIdFromCookies } from "@/api/cart";
 
 export async function Navigation() {
@@ -14,8 +14,6 @@ export async function Navigation() {
 	const quantity = cart?.orderItems.length ?? 0;
 
 	const modalUrl = "/cart" as Route<"string">;
-
-	const products = await getProductList();
 
 	return (
 		<div className="sticky top-0 z-10 flex  opacity-70">

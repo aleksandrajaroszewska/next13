@@ -7,19 +7,43 @@ import {
 	ProductsCountDocument,
 	CollectionsGetListDocument,
 	ProductsRelatedDocument,
+	ProductOrderByInput,
 } from "@/gql/graphql";
 import { executeGraphql } from "./graphQlApi";
+import { notFound } from "next/dist/client/components/not-found";
 
-export const getProductList = async () => {
-	const graphqlResponse = await executeGraphql({
+// export const getProductList = async () => {
+// 	const graphqlResponse = await executeGraphql({
+// 		query: ProductsGetListDocument,
+// 		variables: {},
+// 		next: {
+// 			revalidate: 15,
+// 		},
+// 	});
+
+// 	return graphqlResponse.products;
+// };
+
+export const getProductsList = async (params: {
+	query?: string;
+	first?: number;
+	skip?: number;
+	orderBy?: ProductOrderByInput;
+}) => {
+	const { products, productsConnection } = await executeGraphql({
 		query: ProductsGetListDocument,
-		variables: {},
-		next: {
-			revalidate: 15,
+		variables: {
+			query: params.query || "",
+			first: params.first,
+			skip: params.skip,
+			orderBy: params.orderBy || "createdAt_ASC",
 		},
+		next: { tags: ["product"] },
 	});
 
-	return graphqlResponse.products;
+	if (!products && !productsConnection) notFound();
+
+	return { products, productsConnection };
 };
 
 export const getProductsRelated = async () => {

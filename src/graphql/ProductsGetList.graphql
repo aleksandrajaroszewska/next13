@@ -1,14 +1,38 @@
-query ProductsGetList {
-	products(first: 20) {
-		id
-		name
-		description
-		categories(first: 1) {
-			name
+# query ProductsGetList {
+# 	products(first: 20) {
+# 		id
+# 		name
+# 		description
+# 		categories(first: 1) {
+# 			name
+# 		}
+# 		images(first: 1) {
+# 			url
+# 		}
+# 		price
+# 		reviews {
+# 			...ReviewItem
+# 		}
+# 	}
+# }
+
+query ProductsGetList(
+	$first: Int
+	$skip: Int
+	$query: String
+	$orderBy: ProductOrderByInput
+) {
+	products(
+		where: { name_contains: $query }
+		first: $first
+		skip: $skip
+		orderBy: $orderBy
+	) {
+		...ProductListItem
+	}
+	productsConnection(where: { name_contains: $query }) {
+		pageInfo {
+			pageSize
 		}
-		images(first: 1) {
-			url
-		}
-		price
 	}
 }

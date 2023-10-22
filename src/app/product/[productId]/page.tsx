@@ -2,12 +2,12 @@ import { Route, type Metadata } from "next";
 
 import { getProductsById } from "@/api/products";
 import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
-import { cookies } from "next/headers";
 
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/cart";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import RelatedProducts from "@/ui/organisms/RelatedProducts";
+import { ProductItemReview } from "@/ui/organisms/ProductsReviews";
 
 export const generateMetadata = async ({
 	params,
@@ -86,6 +86,8 @@ export default async function SingleProductPage({
 					<AddToCartButton />
 				</form>
 			</div>
+			<ProductItemReview product={product} />
+
 			<RelatedProducts />
 		</article>
 	);
