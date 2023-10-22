@@ -13,5 +13,6 @@ query ProductsRelated {
 		reviews {
 			...ReviewItem
 		}
+		averageRating
 	}
 }

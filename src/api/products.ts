@@ -59,6 +59,18 @@ export const getProductsRelated = async () => {
 	return graphqlResponse.products;
 };
 
+// export const getProductsRelated = async () => {
+// 	const graphqlResponse = await executeGraphql({
+// 		query: ProductsRelatedDocument,
+// 		variables: {},
+// 		next: {
+// 			revalidate: 15,
+// 		},
+// 	});
+
+// 	return graphqlResponse.products;
+// };
+
 export const getCollectionsList = async () => {
 	const graphqlResponse = await executeGraphql({
 		query: CollectionsGetListDocument,
