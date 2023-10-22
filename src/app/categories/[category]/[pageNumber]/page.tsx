@@ -52,10 +52,7 @@ export default async function CategoryProductsPage({
 
 	return (
 		<div>
-			<h1>
-				CategoryProductsPage {params.category} page{" "}
-				{params.pageNumber}
-			</h1>
+			<h1>categories</h1>
 			<ProductList products={products} />
 
 			<Pagination
